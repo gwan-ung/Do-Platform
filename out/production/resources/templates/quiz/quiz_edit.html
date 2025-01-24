@@ -1,0 +1,446 @@
+<div class="wrap">
+    <div class="con_wrap">
+        <div class="con">
+            <div class="head_tit">
+                <div class="tit">
+                    <h2>[[${project.name}]]-퀴즈</h2>
+                    <small>추가된 문제 <span>3</span>/10</small>
+                </div>
+            </div>
+            <div class="table_wrap">
+                <div class="table_head">
+<!--                    <button type="button" class="modal_step_open" modal_step="Del">선택 삭제</button>-->
+                    <button type="button" class="btn_yellow table_btn" onclick="OpenQuizAddModal()">퀴즈 직접 추가</button>
+                    <button type="button" class="btn_yellow table_btn">AI퀴즈 추가</button>
+<!--                    <small>*이미지 업로드는 jpg, png파일 및 최대 10mb까지 가능합니다.</small>-->
+                </div>
+                <div class="table">
+                    <table>
+                        <colgroup>
+<!--                            <col style="">-->
+                            <col style="">
+                            <col style="width: 6%;">
+                            <col style="">
+                            <col style="width: 6%;">
+                            <col style="width: 6%;">
+                            <col style="width: 6%;">
+                            <col style="width: 6%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                        </colgroup>
+                        <tr>
+<!--                            <th>-->
+<!--                                <div class="chk_wrap">-->
+<!--                                    <input type="checkbox" name="" id="chk_all">-->
+<!--                                    <label for="chk_all" class="check_style1"></label>-->
+<!--                                </div>-->
+<!--                            </th>-->
+                            <th>문제</th>
+                            <th>정답</th>
+                            <th>해설</th>
+                            <th>보기 1</th>
+                            <th>보기 2</th>
+                            <th>보기 3</th>
+                            <th>보기 4</th>
+                            <th>이미지 업로드</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+<!--                            <td>-->
+<!--                                <div class="chk_wrap">-->
+<!--                                    <input type="checkbox" name="" id="chk1_1">-->
+<!--                                    <label for="chk1_1" class="check_style1"></label>-->
+<!--                                </div>-->
+<!--                            </td>-->
+                            <td class="tal">태양계의 가장 큰 행성은 무엇
+                                일까요</td>
+                            <td>목성</td>
+                            <td class="tal">목성은 태양계에서 가장 큰 행
+                                성으로지구보다 약 31.8배 더
+                                무겁고 반지름도 11배나 큽니
+                                다.</td>
+                            <td>목성</td>
+                            <td>토성</td>
+                            <td>지구</td>
+                            <td>화성</td>
+                            <td>
+                                <div class="file_wrap">
+                                    <input type="file" name="" id="file1_1">
+                                    <label for="file1_1">파일 업로드</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="table_btn">
+                                    <button type="button">수정</button>
+                                    <button type="button">삭제</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+<!--                            <td>-->
+<!--                                <div class="chk_wrap">-->
+<!--                                    <input type="checkbox" name="" id="chk1_2">-->
+<!--                                    <label for="chk1_2" class="check_style1"></label>-->
+<!--                                </div>-->
+<!--                            </td>-->
+                            <td class="tal">태양계의 가장 큰 행성은 무엇
+                                일까요</td>
+                            <td>목성</td>
+                            <td class="tal">목성은 태양계에서 가장 큰 행
+                                성으로지구보다 약 31.8배 더
+                                무겁고 반지름도 11배나 큽니
+                                다.</td>
+                            <td>목성</td>
+                            <td>토성</td>
+                            <td>지구</td>
+                            <td>화성</td>
+                            <td>
+                                <div class="file_wrap">
+                                    <input type="file" name="" id="file1_2">
+                                    <label for="file1_2">파일 업로드</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="table_btn">
+                                    <button type="button">저장</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+<!--                            <td>-->
+<!--                                <div class="chk_wrap">-->
+<!--                                    <input type="checkbox" name="" id="chk1_3">-->
+<!--                                    <label for="chk1_3" class="check_style1"></label>-->
+<!--                                </div>-->
+<!--                            </td>-->
+                            <td class="tal">태양계의 가장 큰 행성은 무엇
+                                일까요</td>
+                            <td>목성</td>
+                            <td class="tal">목성은 태양계에서 가장 큰 행
+                                성으로지구보다 약 31.8배 더
+                                무겁고 반지름도 11배나 큽니
+                                다.</td>
+                            <td>목성</td>
+                            <td>토성</td>
+                            <td>지구</td>
+                            <td>화성</td>
+                            <td class="tal">
+                                <div class="upload">
+                                    <a href="" download="">
+                                        <p>
+                                            칠전팔기_1020332123칠전팔기_1020332123
+                                        </p>
+                                    </a>
+                                    <div class="file_wrap2">
+                                        <input type="file" name="" id="file1_3">
+                                        <label for="file1_3"><i><img src="../assets/images/i_edit.svg" alt=""></i></label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="table_btn">
+                                    <button type="button">저장</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+<!--                <div class="add_btn">-->
+<!--                    <a href="./create_ai_quiz.html">+</a>-->
+<!--                </div>-->
+            </div>
+            <div class="btn flex btn_center w300">
+<!--                <a href="./content.html" class="btn_line">뒤로가기</a>-->
+                <button type="button" class="btn_yellow">게임 생성</button>
+            </div>
+            <!-- 경고 상태창 -->
+            <!-- .on으로 활성화 -->
+            <div class="del_confirm top alert1">
+                <i><img src="../assets/images/i_alert.svg" alt=""></i>
+                <p>문제가 영구 삭제 되었습니다.</p>
+            </div>
+            <div class="del_confirm top alert2">
+                <i><img src="../assets/images/i_alert.svg" alt=""></i>
+                <p>AI퀴즈에서 추출된 문제가 리스트에 추가되었습니다.(<span>2</span>/10)</p>
+            </div>
+            <!-- 경고 상태창 // -->
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- modal -->
+    <div class="modal modal modal_step modal_stepCreate hidden">
+        <div class="modal_overlay">
+        </div>
+        <div class="modal_content modal_sm scrollbar">
+            <div class="layoutCont">  
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                    </div> -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar">
+                        <div class="txt">
+                            <p>
+                                저장하신 내용으로<br/>
+                                게임을 생성하시겠습니까?                          
+                            </p>
+                        </div>
+                        <div class="btn flex">
+                            <button type="button" class="btn_yellow cancerButton">예</button>
+                            <button type="button" class="btn_line cancerButton">아니오</button>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+    <div class="modal modal modal_step modal_stepDel hidden">
+        <div class="modal_overlay">
+        </div>
+        <div class="modal_content modal_sm scrollbar">
+            <div class="layoutCont">  
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                    </div> -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar">
+                        <div class="txt">
+                            <p>
+                                선택하신 문제를 삭제하시겠습니까?<br/>
+                                삭제된 문제는 복구할 수 없습니다.                   
+                            </p>
+                        </div>
+                        <div class="btn flex">
+                            <button type="button" class="btn_yellow cancerButton alert1_btn">예</button>
+                            <button type="button" class="btn_line cancerButton">아니오</button>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal modal_step modal_stepIng hidden">
+        <div class="modal_overlay">
+        </div>
+        <div class="modal_content modal_sm scrollbar" style="width: 342px;">
+            <div class="layoutCont">  
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                    </div> -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar" style="padding: 64px 48px;">
+                        <div class="txt">
+                            <p>
+                                게임을 생성하고 있습니다.               
+                            </p>
+                        </div>  
+                        <div class="progress">
+                            <progress value="20" max="100"></progress>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal modal_step modal_stepIng2 hidden">
+        <div class="modal_overlay">
+        </div>
+        <div class="modal_content modal_sm scrollbar" style="width: 342px;">
+            <div class="layoutCont">  
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                    </div> -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar" style="padding: 64px 48px;">
+                        <div class="txt">
+                            <p>
+                                게임으로 입장 중입니다.         
+                            </p>
+                        </div>  
+                        <div class="progress">
+                            <progress value="20" max="100"></progress>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal modal_step modal_quiz_add hidden">
+    <div class="modal_overlay"></div>
+    <div class="modal_content modal_md scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_head">
+                    <h3>퀴즈 추가</h3>
+                </div>
+                <div class="modal_con scrollbar">
+                    <form id="quiz_add_form">
+                        <div class="form_group">
+                            <label for="quiz_question">문제</label>
+                            <textarea id="quiz_question" name="quiz_question" rows="4" required></textarea>
+                        </div>
+                        <div class="form_group">
+                            <label for="quiz_answer">정답</label>
+                            <input type="text" id="quiz_answer" name="quiz_answer" required />
+                        </div>
+                        <div class="form_group">
+                            <label>보기</label>
+                            <div class="choices">
+                                <input type="text" name="choice1" placeholder="보기 1" required />
+                                <input type="text" name="choice2" placeholder="보기 2" required />
+                                <input type="text" name="choice3" placeholder="보기 3" required />
+                                <input type="text" name="choice4" placeholder="보기 4" required />
+                            </div>
+                        </div>
+                        <div class="form_group">
+                            <label for="quiz_explanation">해설</label>
+                            <textarea id="quiz_explanation" name="quiz_explanation" rows="4"></textarea>
+                        </div>
+                        <div class="form_group">
+                            <label for="quiz_image">이미지 업로드</label>
+                            <input type="file" id="quiz_image" name="quiz_image" accept="image/*" />
+                        </div>
+                        <div class="btn flex">
+                            <button type="submit" class="btn_yellow">저장</button>
+                            <button type="button" class="btn_line modal_close">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal_quiz_add {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #2c2c2c;
+        border-radius: 8px;
+        width: 500px;
+        padding: 20px;
+        z-index: 1000;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        color: white;
+    }
+
+    .modal_overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .modal_head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .modal_head h3 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .modal_head .modal_close {
+        border: none;
+        background-color: transparent;
+        color: white;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .modal_con {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form_group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    textarea,
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        background-color: #fff;
+    }
+
+    input[type="file"] {
+        background-color: #f4f4f4;
+        border: none;
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .choices {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .choices input {
+        width: calc(25% - 10px);
+    }
+
+    .btn.flex {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .btn_yellow {
+        background-color: #ffca17;
+        color: black;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn_yellow:hover {
+        background-color: #ffb000;
+    }
+
+    .btn_line {
+        background-color: transparent;
+        color: white;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border: 2px solid white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn_line:hover {
+        background-color: white;
+        color: black;
+    }
+
+</style>

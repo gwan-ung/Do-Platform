@@ -1,0 +1,569 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:javascript="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do 플랫폼</title>
+    <meta name="keyword" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- css -->
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/swiper/css/swiper.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- script -->
+    <script src="../assets/scripts/jquery-3.1.1.min.js"></script>
+<!--    <script src="../assets/scripts/script.js"></script>-->
+    <script src="../assets/scripts/main.js"></script>
+    <script src="../assets/swiper/js/swiper.js"></script>
+
+    <style>
+        /* 동그라미 스타일 */
+        .circle-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px; /* 원의 가로 크기 */
+            height: 30px; /* 원의 세로 크기 */
+            border-radius: 50%; /* 동그라미 */
+            background-color: #4285f4; /* 배경 색상 */
+            color: white; /* 텍스트 색상 */
+            font-size: 15px; /* 텍스트 크기 */
+            font-weight: bold; /* 텍스트 굵기 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+        }
+
+        .favorite-active {
+            background-color: rgba(255, 202, 23, 0.05);
+        }
+
+        .favorite-active img {
+            filter: invert(64%) sepia(76%) saturate(465%) hue-rotate(4deg) brightness(107%) contrast(104%) !important;
+        }
+
+        .favorite-active p {
+            color: #ffca17 !important;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+    <div class="wrap">
+        <div class="header_left" id="headerLeft">
+            <div class="logo">
+                <a href="/main/project">
+                    <img src="../assets/images/logo.svg" alt="">
+                </a>
+            </div>
+            <ul class="nav_list">
+<!--                <li class="">-->
+<!--                    <a href="javascript:void(0);" onclick="RequestServer('GET',`/quiz/main?user_id=${encodeURIComponent(USER_INFO.user_id)}`,'',AddContentDivHtmlForQuiz)">퀴즈</a>-->
+<!--                </li>-->
+<!--                <li>/</li>-->
+<!--                <li>-->
+<!--                    <a href="javascript:void(0);">AI퀴즈</a>-->
+<!--                    <div class="tag">-->
+<!--                        <img src="../assets/images/tag.svg" alt="">-->
+<!--                        <button type="button" class="hide-tag-btn"></button>-->
+<!--                    </div>-->
+<!--                </li>-->
+            </ul>
+        </div>
+        <div class="header_right">
+            <div class="login_before">
+                <div class="create">
+                    <a href="#none" class="modal_step_open" modal_step="Create">만들기</a>
+                </div>
+                <div class="user dropdown">
+                    <p class="til-user-name">[[${userInfo.user_name}]]</p>
+                    <div class="circle-icon">
+                        [[${userInfo.user_name.substring(0, 1)}]]
+                    </div>
+<!--                    <i style="background: url('../assets/images/i_user.svg') no-repeat center; background-size: cover;">-->
+<!--                    </i>-->
+                </div>
+                <div class="drop_con">
+                    <div class="drop_top">
+                        <div class="txt">
+                            <h5 class="til-user-name">[[${userInfo.user_name}]]</h5>
+                            <p>[[${userInfo.user_id}]]</p>
+                        </div>
+                        <div class="logout">
+                            <a href="/logout">
+                                로그아웃
+                            </a>
+                        </div>
+                    </div>
+                    <div class="drop_bottom">
+                        <ul class="list">
+                            <li>
+                                <a href="javascript:void(0);" onclick="CallSetting()">
+                                    <i><img src="../assets/images/i_setting.svg" alt=""></i>
+                                    <p>계정설정</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="content">
+    <div class="wrap">
+        <div class="con_wrap">
+            <div class="side_bar">
+                <div class="click_area"></div>
+                <div class="search">
+                    <input type="text" id="projectSearch" placeholder="프로젝트 검색">
+                </div>
+                <ul class="list" id="main-menu">
+                    <li class="on">
+                        <a href="javascript:void(0);" onclick="RequestCon('my-project', this)">
+                            <i><img src="../assets/images/i_nav1.svg" alt=""></i>
+                            <p>내 프로젝트</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" onclick="RequestCon('trash', this)">
+                            <i><img src="../assets/images/i_nav2.svg" alt=""></i>
+                            <p>휴지통</p>
+                        </a>
+                    </li>
+                </ul>
+                <div class="sub_tit">
+                    <h5>북마크</h5>
+                </div>
+                <ul class="list" id="bookmark-menu">
+                    <li>
+                        <a href="javascript:void(0);" onclick="RequestCon('favorite', this)">
+                            <i><img src="../assets/images/i_nav3.svg" alt=""></i>
+                            <p>즐겨찾기</p>
+                        </a>
+                    </li>
+                    <th:block th:each="folder : ${folderList}">
+                        <li th:data-folder-id="${folder.id}"
+                            th:data-folder-name="${folder.name}"
+                            th:id="'li-folder-'+${folder.id}"
+                        >
+                            <a href="javascript:void(0);" onclick="RequestCon('folder-project', this)">
+                                <i><img src="../assets/images/i_nav6.svg" alt=""></i>
+                                <p th:id="'li-p-folder-'+${folder.id}" th:text="${folder.name}">수학게임</p>
+                            </a>
+                            <button type="button" class="dropdown">
+                                <img src="../assets/images/dots.svg" alt="">
+                            </button>
+                            <ul class="drop_con">
+                                <li th:data-folder-id="${folder.id}"
+                                th:data-folder-name="${folder.name}">
+                                    <a href="javascript:void(0);" onclick="OpenChangeFolderNameModal(this)" >
+                                        <i>
+                                            <img src="../assets/images/i_drop7.svg" alt="">
+                                        </i>
+                                        <p>폴더 이름 수정</p>
+                                    </a>
+                                </li>
+                                <li class="del"
+                                    th:data-folder-id="${folder.id}"
+                                    th:data-folder-name="${folder.name}"
+                                >
+                                    <a href="javascript:void(0);" onclick="DeleteFolder(this)">
+                                        <i>
+                                            <img src="../assets/images/i_drop6.svg" alt="">
+                                        </i>
+                                        <p>폴더 삭제</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </th:block>
+
+                    <li>
+                        <a href="#none" class="modal_step_open" modal_step="NewFolderName">
+                            <i><img src="../assets/images/i_nav4.svg" alt=""></i>
+                            <p>새 폴더</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="con">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const userInfo ={
+        user_id : '[[${userInfo.user_id}]]',
+        user_name :  '[[${userInfo.user_name}]]',
+        is_sns :  '[[${userInfo.is_sns}]]'
+    };
+</script>
+<footer>
+
+</footer>
+
+<!--모달창-->
+<div class="modal modal modal_step modal_stepJoin hidden" id="participantModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>                       -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <p>
+                            참여 학생 인원을 입력해주세요.<br/>
+                            (최대 20명까지)
+                        </p>
+                    </div>
+                    <div class="input_wrap number">
+                        <input type="number" id="max_participant" placeholder="5" maxlength="20">
+                        <p>명</p>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_yellow cancerButton" id="saveParticipantButton">저장</button>
+                        <button type="button" class="btn_line cancerButton" onclick="CloseModal('participantModal')">닫기</button>
+                    </div>
+                </div>
+                <!-- .on으로 활성화 -->
+                <div class="del_confirm">
+                    <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+                    <p>참여학생 인원은 <span>최소 1명 이상</span> 이여야 합니다.</p>
+                </div>
+                <div class="del_confirm">
+                    <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+                    <p>참여학생 인원은 <span>최대 20명 까지만</span> 가능합니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepPerson hidden">
+<div class="modal_overlay">
+</div>
+<div class="modal_content modal_sm scrollbar">
+    <div class="layoutCont">
+        <div class="modalContWrap">
+            <!-- <div class="modal_close cancerButton">
+              <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+            </div>                       -->
+            <div class="modal_head">
+            </div>
+            <div class="modal_con scrollbar">
+                <div class="txt tal">
+                    <p>
+                        참여 학생 인원을 입력해주세요.<br/>
+                        (최대 20명까지)
+                    </p>
+                </div>
+                <div class="input_wrap number">
+                    <input type="number" id="numberInput" placeholder="5" maxlength="20">
+                    <p>명</p>
+                </div>
+                <div class="btn flex">
+                    <button type="button" class="btn_yellow cancerButton" onclick="saveProject()">저장</button>
+                    <button type="button" class="btn_line cancerButton" >닫기</button>
+                </div>
+            </div>
+            <!-- .on으로 활성화 -->
+            <div class="del_confirm">
+                <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+                <p>참여학생 인원은 <span>최소 1명 이상</span> 이여야 합니다.</p>
+            </div>
+            <div class="del_confirm">
+                <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+                <p>참여학생 인원은 <span>최대 20명 까지만</span> 가능합니다.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal modal modal_step modal_stepDel hidden" id="deleteModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <h5>영구적으로 삭제하시겠습니까?</h5>
+                        <h6>
+                            프로젝트가 영구적으로 삭제됩니다.<br/>
+                            삭제 시 복원할 수 없습니다.
+                        </h6>
+                    </div>
+                    <div class="project">
+                        <div class="img" style="background: url() no-repeat #74767d center; background-size: cover;"></div>
+                        <p id="modal-project-name">프로젝트명</p>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_line cancerButton">취소</button>
+                        <button type="button" class="btn_yellow cancerButton alert6_btn" id="deleteButton">삭제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepCreate hidden">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar" style="max-width: 460px;">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_close cancerButton">
+                    <img src="../assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <h5>
+                            프로젝트 이름 설정
+                        </h5>
+                    </div>
+                    <!-- alert 발생시 .red 추가 -->
+                    <div class="input_wrap red">
+                        <div class="input_txt">
+                            <h6>프로젝트 이름</h6>
+                            <p class="text_num">
+                                <span class="current_length">0</span><span>/</span><span>30</span>
+                            </p>
+                        </div>
+                        <input type="text" class="project_name_input" id="projectName" placeholder="이름을 입력해주세요." maxlength="30">
+                        <small class="alert">30자 이내로 작성해주세요.</small>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_yellow cancerButton" onclick="SaveAndProceed('name', document.getElementById('projectName').value, '/main/theme')">만들기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step hidden" id="changeProjectNameModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar" style="max-width: 460px;">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_close cancerButton">
+                    <img src="../assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <h5>
+                            프로젝트 이름 수정
+                        </h5>
+                    </div>
+                    <!-- alert 발생시 .red 추가 -->
+                    <div class="input_wrap red">
+                        <div class="input_txt">
+                            <h6>프로젝트 이름</h6>
+                            <p class="text_num">
+                                <span class="current_length change_project_name">0</span><span>/</span><span>30</span>
+                            </p>
+                        </div>
+                        <input type="text" class="project_name_input" id="changeProjectName" placeholder="이름을 입력해주세요." maxlength="30">
+                        <small class="alert">15자 이내로 작성해주세요.</small>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_yellow cancerButton" id="changeProjectNameButton" >이름 변경</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepChangeName hidden" id="changeFolderNameModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar" style="max-width: 460px;">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_close cancerButton">
+                    <img src="../assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <h5>
+                            폴더 이름 수정
+                        </h5>
+                    </div>
+                    <!-- alert 발생시 .red 추가 -->
+                    <div class="input_wrap red">
+                        <div class="input_txt">
+                            <h6>폴더 이름</h6>
+                            <p class="text_num">
+                                <span class="current_length change_folder_name">0</span><span>/</span><span>15</span>
+                            </p>
+                        </div>
+                        <input type="text" class="folder_name_input" id="changeFolderName" placeholder="이름을 입력해주세요." maxlength="15">
+                        <small class="alert">15자 이내로 작성해주세요.</small>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_yellow cancerButton" id="changeFolderNameButton" >이름 변경</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepNewFolderName hidden">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar" style="max-width: 460px;">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_close cancerButton">
+                    <img src="../assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <h5>
+                            새폴더 이름 설정
+                        </h5>
+                    </div>
+                    <!-- alert 발생시 .red 추가 -->
+                    <div class="input_wrap red">
+                        <div class="input_txt">
+                            <h6>폴더 이름</h6>
+                            <p class="text_num">
+                                <span class="current_length">0</span><span>/</span><span>15</span>
+                            </p>
+                        </div>
+                        <input type="text" class="folder_name_input" id="newFolderName" placeholder="이름을 입력해주세요." maxlength="15">
+                        <small class="alert">15자 이내로 작성해주세요.</small>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_yellow cancerButton" onclick="CreateFolder()">만들기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepChangeUserName hidden" id="changeUserNameModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar" style="max-width: 460px;">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_close cancerButton">
+                    <img src="../assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <h5>
+                            사용자 이름 수정
+                        </h5>
+                    </div>
+                    <!-- alert 발생시 .red 추가 -->
+                    <div class="input_wrap red">
+                        <div class="input_txt">
+                            <h6>사용자 이름</h6>
+                            <p class="text_num">
+                                <span class="current_length change_user_name">0</span><span>/</span><span>15</span>
+                            </p>
+                        </div>
+                        <input type="text" class="folder_name_input" id="changeUserName" placeholder="이름을 입력해주세요." maxlength="15">
+                        <small class="alert">15자 이내로 작성해주세요.</small>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_yellow cancerButton" id="changeUserNameButton" >이름 변경</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepUserDelete hidden" id="userDeleteModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>                       -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt">
+                        <p>
+                            계정 삭제를 진행하시겠습니까?<br/>
+                            계정 삭제 시 작업한 내역은 복원할 수 없습니다.
+                        </p>
+                    </div>
+                    <div class="btn flex">
+                        <a href="javascript:void(0);" id="userDelete" class="btn_yellow cancerButton confirm_btn" onclick="UserDelete()">예</a>
+                        <button type="button" class="btn_line cancerButton">아니오</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--모달창-->
+
+<!-- 경고 상태창 -->
+<!-- .on으로 활성화 -->
+<!--<div class="del_confirm alert1">-->
+<!--    <i><img src="../assets/images/i_alert.svg" alt=""></i>-->
+<!--    <p>해당 콘텐츠가 존재하지 않습니다.</p>-->
+<!--</div>-->
+<!--<div class="del_confirm alert2">-->
+<!--    <i><img src="../assets/images/i_alert.svg" alt=""></i>-->
+<!--    <p>검색어가 비어있습니다.</p>-->
+<!--</div>-->
+<!--<div class="del_confirm alert3">-->
+<!--    <i><img src="../assets/images/i_alert.svg" alt=""></i>-->
+<!--    <p>프로젝트를 휴지통으로 이동시켰습니다.</p>-->
+<!--</div>-->
+<!--<div class="del_confirm alert4">-->
+<!--    <i><img src="../assets/images/i_alert.svg" alt=""></i>-->
+<!--    <p>Do 링크 클립보드에 복사 하였습니다.</p>-->
+<!--</div>-->
+<!--&lt;!&ndash; 경고 상태창 &ndash;&gt;-->
+<!--&lt;!&ndash; .on으로 활성화 &ndash;&gt;-->
+<!--<div class="del_confirm alert5">-->
+<!--    <i><img src="../assets/images/i_confirm.svg" alt=""></i>-->
+<!--    <p>프로젝트가 복원되었습니다.</p><a href="">열기</a>-->
+<!--</div>-->
+<!--<div class="del_confirm alert6">-->
+<!--    <i><img src="../assets/images/i_confirm.svg" alt=""></i>-->
+<!--    <p>프로젝트가 영구적으로 삭제되었습니다.</p>-->
+<!--</div>-->
+
+<!-- 경고 상태창 // -->
+
+</body>
+</html>

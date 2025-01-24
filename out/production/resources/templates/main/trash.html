@@ -1,0 +1,78 @@
+<div class="head_tit">
+    <div class="tit">
+        <h2>휴지통</h2>
+    </div>
+    <ul class="sort_list">
+        <li>
+            <input type="radio" name="sort" id="sort1" checked>
+            <label for="sort1">내림차순</label>
+        </li>
+        <li>
+            /
+        </li>
+        <li>
+            <input type="radio" name="sort" id="sort2">
+            <label for="sort2">오름차순</label>
+        </li>
+    </ul>
+</div>
+<div class="list_wrap">
+    <ul class="prod_list" id="trashList">
+        <li th:each="project : ${trashProjectList}"
+            th:data-project-name="${project.name}"
+            th:data-project-id="${project.id}"
+            th:id="'li-project-'+${project.id}"
+        >
+
+            <div class="img" style="background: url('') #fff no-repeat center; background-size: cover;"></div>
+
+            <div class="txt">
+                <div class="txt_top">
+                    <a href="">
+                        <h5 th:text="${project.name}">프로젝트명</h5>
+                    </a>
+                    <button type="button" class="dropdown">
+                        <img src="../assets/images/dots.svg" alt="">
+                    </button>
+                    <ul class="drop_con">
+                        <li>
+                            <a href="javascript:void(0);"
+                               class="alert5_btn"
+                               th:data-project-id="${project.id}"
+                               th:data-project-deleted="${project.is_deleted}"
+                               onclick="UpdateIsDeleted(this)">
+                                <i>
+                                    <img src="../assets/images/i_drop8.svg" alt="">
+                                </i>
+                                <p>복원</p>
+                            </a>
+                        </li>
+                        <li class="del"
+                            th:data-project-id="${project.id}"
+                            th:data-project-name="${project.name}"
+                        >
+                            <a href="#none" onclick="OpenDeleteModal(this)">
+                                <i>
+                                    <img src="../assets/images/i_drop6.svg" alt="">
+                                </i>
+                                <p>영구적으로 삭제</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <p>30분</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<div class="del_confirm alert5">
+    <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+    <p>프로젝트가 복원되었습니다.</p><a href="">열기</a>
+</div>
+
+<div class="del_confirm alert6">
+    <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+    <p>프로젝트가 영구적으로 삭제되었습니다.</p>
+</div>

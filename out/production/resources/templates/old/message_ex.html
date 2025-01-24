@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Message</title>
+
+
+</head>
+<body>
+    <h1>알림</h1>
+    <h2 th:if="${title}" th:text="${title}"></h2>
+    <h2 th:if="${message}" th:text="${message}"></h2>
+</body>
+</html>

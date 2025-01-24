@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with ChatGPT</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #response {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            white-space: pre-wrap; /* 개행 처리 */
+            word-wrap: break-word; /* 길이 초과 시 단어를 줄 바꿈 */
+            border-radius: 5px;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Chat with ChatGPT</h1>
+
+<!-- 질문 입력 폼 -->
+<form id="chat-form">
+    <label for="question">Enter your question:</label><br>
+    <textarea id="question" name="question" placeholder="Type your question here" required></textarea>
+    <button type="submit">Ask</button>
+</form>
+
+<hr>
+
+<!-- 결과 출력 -->
+<h2>Response:</h2>
+<pre id="response"></pre> <!-- <pre> 태그로 개행을 유지 -->
+
+<script>
+    $(document).ready(function () {
+        $("#chat-form").on("submit", function (event) {
+            event.preventDefault();
+
+            const question = $("#question").val();
+
+            $.ajax({
+                url: "/api/chat",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ userInput: question }),
+                success: function (response) {
+                    // 개행 및 포맷팅 처리된 응답 표시
+                    $("#response").text(response);
+                },
+                error: function () {
+                    $("#response").text("An error occurred. Please try again.");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

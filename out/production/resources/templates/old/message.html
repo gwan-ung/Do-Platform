@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Message</title>
+
+<!--    <meta http-equiv="refresh" content="5;url=/login">-->
+
+    <script>
+        let countdown = 5; // 초기 카운트 값
+        function startCountdown() {
+            const countdownElement = document.getElementById("countdown");
+            const interval = setInterval(() => {
+                if (countdown > 0) {
+                    countdownElement.textContent = countdown;
+                    countdown--;
+                } else {
+                    clearInterval(interval);
+                    // 여기서 리다이렉션 동작 수행 (예: 로그인 페이지로 이동)
+                    window.location.href = "/login"; // 원하는 URL로 변경
+                }
+            }, 1000); // 1초마다 실행
+        }
+
+        window.onload = startCountdown;
+    </script>
+</head>
+<body>
+    <h2 th:if="${message}" th:text="${message}"></h2>
+    <h2 th:if="${error}" th:text="${error}" style="color: red;"></h2>
+    <p>You will be redirected to the login page in <span id="countdown">5</span> seconds.</p>
+
+</body>
+</html>

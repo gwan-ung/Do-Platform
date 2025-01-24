@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .social-login, .signup-container, .reset-password-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .social-login a,
+        .signup-container a,
+        .reset-password-container a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #555;
+        }
+        .signup-container a:hover,
+        .reset-password-container a:hover {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>Login</h2>
+
+    <!-- 에러 메시지 표시 -->
+    <div class="error-message" th:if="${param.error}" th:text="${param.message}">
+        Invalid email or password.
+    </div>
+
+    <!-- 로그인 폼 -->
+    <form th:action="@{/login}" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+
+    <!-- 소셜 로그인 -->
+    <div class="social-login">
+        <p>Or login with:</p>
+        <a th:href="@{/oauth2/authorization/google}">Google</a>
+        <a th:href="@{/oauth2/authorization/naver}">Naver</a>
+        <a th:href="@{/oauth2/authorization/kakao}">Kakao</a>
+
+    </div>
+
+    <!-- 이메일 가입 -->
+    <div class="signup-container">
+        <p>Don't have an account?</p>
+        <a th:href="@{/register}">Sign up with email</a>
+    </div>
+
+    <!-- 비밀번호 초기화 -->
+    <div class="reset-password-container">
+        <form th:action="@{/new-password}" method="get">
+            <label for="reset-email">Enter your email to reset password:</label>
+            <input type="email" id="reset-email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Reset Password</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

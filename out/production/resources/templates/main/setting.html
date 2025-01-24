@@ -1,0 +1,115 @@
+
+<div class="wrap">
+    <div class="con_wrap">
+        <div class="side_bar">
+            <div class="click_area"></div>
+            <div class="sub_tit">
+                <h2>계정 설정</h2>
+            </div>
+            <ul class="list">
+                <li class="on">
+                    <a href="javascript:void(0);" onclick="CallSetting()">
+                        <i><img src="../assets/images/i_nav5.svg" alt=""></i>
+                        <p>기본 정보</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" onclick="CallAccountDelete()">
+                        <i><img src="../assets/images/i_nav2.svg" alt=""></i>
+                        <p>계정 삭제</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="con">
+            <div class="head_tit">
+                <div class="tit">
+                    <h2>기본 정보</h2>
+                </div>
+            </div>
+            <ul class="input_list">
+                <li>
+                    <div class="input_wrap">
+                        <h5>이메일</h5>
+                        <div class="input_func">
+                            <input type="text" th:value="${user.user_id}" readonly>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="input_wrap">
+                        <h5>이름</h5>
+                        <div class="input_func">
+                            <input type="text" id="input-user-name" th:value="${user.name}" readonly>
+                           <div class="input_btn input_edit">
+                               <button type="button" th:data-user-name="${user.name}" onclick="OpenChangeName(this)"><img src="../assets/images/input_edit.svg" alt=""></button>
+                          </div>
+                        </div>
+                    </div>
+                </li>
+                <li th:if="${user.login_type.equals('SELF')}">
+                    <div class="input_wrap">
+                        <h5>현재 비밀번호</h5>
+                        <div class="input_func">
+                          <input type="password" class="password_input" tabindex="1" id="currentPassword" placeholder="비밀번호 입력 (최소 8자)" value="" required>
+                          <div class="input_btn input_visible">
+                            <button type="button"><img src="../assets/images/input_invisible.svg" alt=""></button>
+                          </div>
+                        </div>
+                    </div>
+                </li>
+                <li th:if="${user.login_type.equals('SELF')}">
+                    <div class="input_wrap">
+                        <h5>새 비밀번호</h5>
+                        <div class="input_func">
+                          <input type="password" class="password_input" tabindex="2" id="newPassword" placeholder="새 비밀번호 입력 (최소 8자)" required>
+                          <div class="input_btn input_visible">
+                            <button type="button"><img src="../assets/images/input_invisible.svg" alt=""></button>
+                          </div>
+                        </div>
+                    </div>
+                </li>
+                <li th:if="${user.login_type.equals('SELF')}">
+                    <div class="input_wrap red">
+                        <h5>비밀번호 확인</h5>
+                        <div class="input_func">
+                          <input type="password" class="password_input" tabindex="3" id="newPasswordConfirm" placeholder="새 비밀번호 입력 (최소 8자)" required>
+                          <div class="input_btn input_visible">
+                            <button type="button"><img src="../assets/images/input_invisible.svg" alt=""></button>
+                          </div>
+                          <small class="alert" id="checkPassword" style="display: none;">
+                              비밀번호가 일치하지 않습니다.
+                          </small>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="btn btn_center" th:if="${user.login_type.equals('SELF')}">
+                <button type="button" class="btn_yellow disabled_btn2" onclick="UpdatePassword()" disabled>
+                    비밀번호 업데이트
+                </button>
+            </div>
+            <div class="del_confirm alert_pass_length">
+                <i><img src="../assets/images/i_alert.svg" alt=""></i>
+                <p>새 비밀번호는 8자 이상 입니다.</p>
+            </div>
+            <div class="del_confirm alert_pass_eq">
+                <i><img src="../assets/images/i_alert.svg" alt=""></i>
+                <p>새 비밀번호가 현재 비밀번호와 동일 합니다. 다시 입력해 주세요.</p>
+            </div>
+            <div class="del_confirm alert_pass_confirm">
+                <i><img src="../assets/images/i_alert.svg" alt=""></i>
+                <p>비밀번호 확인을 다시 입력해 주세요.</p>
+            </div>
+            <div class="del_confirm alert_pass_success">
+                <i><img src="../assets/images/i_alert.svg" alt=""></i>
+                <p>비밀 번호 변경 완료</p>
+            </div>
+            <div class="del_confirm alert_pass_fail">
+                <i><img src="../assets/images/i_alert.svg" alt=""></i>
+                <p id="p-alert-pass-fail">비밀 번호 변경 완료</p>
+            </div>
+        </div>
+    </div>
+</div>
+

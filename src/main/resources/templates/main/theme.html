@@ -1,0 +1,70 @@
+<head>
+    <link th:each="theme : ${themeList}"
+          th:href="'https://firebasestorage.googleapis.com/v0/b/do-platform.firebasestorage.app/o/Theme%2F'+${theme.image_url}+'?alt=media'"
+          rel="preload"
+          as="image">
+</head>
+<div class="wrap">
+    <div class="con_wrap">
+        <div class="con">
+            <div class="head_tit">
+                <div class="tit">
+                    <h2>테마 설정</h2>
+                </div>
+                <ul class="sort_list">
+                    <li>
+                        <input type="radio" name="sort" id="sort1" checked>
+                        <label for="sort1">내림차순</label>
+                    </li>
+                    <li>
+                        /
+                    </li>
+                    <li>
+                        <input type="radio" name="sort" id="sort2">
+                        <label for="sort2">오름차순</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="list_wrap">
+                <ul class="prod_list" id="themeList">
+                    <!-- 카테고리 체크시 .on 추가 -->
+                    <li th:each="theme : ${themeList}"
+                        th:data-theme-id="${theme.id}"
+                        th:data-theme-name="${theme.name}">
+                        <a href="#none">
+<!--                            th:style="'background: url(https://firebasestorage.googleapis.com/v0/b/do-platform.firebasestorage.app/o/Theme%2F'+${theme.image_url}+'?alt=media) #fff no-repeat center; background-size: contain;'"-->
+                            <div class="img" style="width: 300px;height: 200px;overflow: hidden;display: flex;justify-content: center;align-items: center;">
+                                <img th:src="'https://firebasestorage.googleapis.com/v0/b/do-platform.firebasestorage.app/o/Theme%2F'+${theme.image_url}+'?alt=media'" loading="lazy" style="width:100%;height:100%;object-fit: cover;" alt="Theme Image">
+                            </div>
+                        </a>
+                        <div class="txt">
+                            <div class="txt_top">
+                                <a href="#none">
+                                    <h5>[[${theme.name}]]</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn flex btn_center">
+                <!-- <a href="" class="btn_line">뒤로가기</a> -->
+                <button type="button" class="btn_yellow disabled_btn" disabled  onclick="SaveAndProceed('theme', document.querySelector('.prod_list li.on').getAttribute('data-theme-id'), '/main/content')">다음 단계</button>
+            </div>
+            <!-- 경고 상태창 -->
+            <!-- .on으로 활성화 -->
+            <div class="del_confirm ">
+                <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+                <p>프로젝트가 복원되었습니다.</p><a href="">열기</a>
+            </div>
+            <div class="del_confirm ">
+                <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+                <p>프로젝트가 영구적으로 삭제되었습니다.</p>
+            </div>
+            <!-- 경고 상태창 // -->
+
+        </div>
+    </div>
+</div>
+
+

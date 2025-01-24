@@ -1,0 +1,197 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do 플랫폼</title>
+    <meta name="keyword" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">   
+    
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/swiper/css/swiper.css">
+
+    <!-- script -->
+    <script src="./assets/scripts/jquery-3.1.1.min.js"></script>
+    <script src="./assets/scripts/script.js"></script>
+    <script src="./assets/swiper/js/swiper.js"></script>
+
+
+</head>
+<body>
+    <header>
+        <div class="wrap">
+            <div class="header_left">
+                <div class="logo">
+                    <a href="/">
+                        <img src="./assets/images/logo.svg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="header_right">
+                <!-- <div class="login_after">
+                    <p>이미 회원이신가요?</p>
+                    <a href="./login.html">로그인</a>
+                </div> -->
+                <div class="login_after">
+                    <p>회원이 아니신가요?</p>
+                    <a href="/sign-up">회원가입</a>
+                </div>
+                <!-- <div class="login_before">
+                    <div class="create">
+                        <a href="#none" class="modal_step_open" modal_step="Create">만들기</a>
+                    </div>
+                    <div class="user dropdown">
+                        <p>이현지</p>
+                        <i style="background: url('./assets/images/i_user.svg') no-repeat center; background-size: cover;">
+                        </i>
+                    </div>
+                    <div class="drop_con">
+                        <div class="drop_top">
+                            <div class="txt">
+                                <h5>이현지</h5>
+                                <p>leehjs2@gmail.com</p>
+                            </div>
+                            <div class="logout">
+                                <a href="./login.html">
+                                    로그아웃
+                                </a>
+                            </div>
+                        </div>
+                        <div class="drop_bottom">
+                            <ul class="list">
+                                <li>
+                                    <a href="./setting.html">
+                                        <i><img src="./assets/images/i_setting.svg" alt=""></i>
+                                        <p>계정설정</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="wrap">
+            <div class="login">
+                <div class="head_tit">
+                    <div class="tit">
+                        <h2>로그인</h2>
+                        <p>다시 오셔서 정말 반갑습니다.</p>
+                    </div>
+                </div>
+                <ul class="simple_login">
+                    <li>
+                        <div class="btn">
+                            <a th:href="@{/oauth2/authorization/google}" class="btn_white">
+                                <i><img src="./assets/images/i_google.svg" alt=""></i>
+                                <p>
+                                    Google로 로그인
+                                </p>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn">
+                            <a th:href="@{/oauth2/authorization/naver}" class="btn_white">
+                                <i><img src="./assets/images/i_naver.svg" alt=""></i>
+                                <p>
+                                    네이버 계정으로 로그인
+                                </p>
+                            </a>
+                        </div>
+                    </li>
+<!--                    <li>-->
+<!--                        <div class="btn">-->
+<!--                            <a href="" class="btn_white">-->
+<!--                                <i><img src="./assets/images/i_microsoft.svg" alt=""></i>-->
+<!--                                <p>-->
+<!--                                    Microsoft 계정으로 로그인-->
+<!--                                </p>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+                    <li>
+                        <div class="btn">
+                            <a th:href="@{/oauth2/authorization/kakao}" class="btn_yellow">
+                                <i><img src="./assets/images/i_kakao.svg" alt=""></i>
+                                <p>
+                                    카카오 계정으로 로그인
+                                </p>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="form">
+                    <form th:action="@{/login}" method="POST">
+                        <!-- 사용자를 찾을수 없는 경우 .red -->
+                        <div class="input_wrap red">
+                            <h5>또는 이메일로 로그인</h5>
+                            <input type="text" class="input_type" name="username" th:value="${email}" placeholder="Do@gmail.com" required>
+<!--                            <small class="alert">사용자를 찾을 수 없음</small>-->
+                        </div>
+<!--                        <div class="input_wrap input_type_toggle" style="display: none;">-->
+                        <div class="input_wrap input_type_toggle">
+                            <h5>비밀번호 입력</h5>
+                            <div class="input_func">
+                              <input type="password" class="password_input" name="password" placeholder="신중하게 입력 하세요" required>
+                              <div class="input_btn input_visible" style="padding-bottom: 22px;">
+                                <button type="button"><img src="./assets/images/input_invisible.svg" alt=""></button>
+                              </div>
+                              <small>최소 8자</small>
+                            </div>  
+                            <div class="find_pw">
+                                <a href="#" id="reset-password-link">비밀번호 재발급</a>
+                            </div>
+                        </div>
+                        <div class="btn">
+<!--                            onclick="location.href='/login'"-->
+                            <button type="submit" class="btn_primary btn_yellow" >계속하기</button>
+                            <h2 th:if="${message}" th:text="${message}" style="color: red;"></h2>
+                        </div>
+                    </form>
+                </div>
+                <script>
+                    $(document).ready(function () {
+                        // 첫 번째 input 요소 선택
+                        $(".input_type").on("input", function () {
+                            // 입력 값 확인
+                            const inputValue = $(this).val();
+
+                            // 값이 있으면 두 번째 input_wrap을 slideDown
+                            if (inputValue.trim() !== "") {
+                                $(".input_type_toggle").slideDown();
+                            } else {
+                                // 값이 비어 있으면 다시 숨기기
+                                $(".input_type_toggle").slideUp();
+                            }
+                        });
+
+                        const resetPasswordLink = document.getElementById('reset-password-link');
+                        const emailInput = document.querySelector('input[name="username"]');
+
+                        resetPasswordLink.addEventListener('click', (event) => {
+                            event.preventDefault(); // 기본 동작 방지
+                            const email = emailInput.value;
+                            if (email) {
+                                window.location.href = `/reset-password?email=${encodeURIComponent(email)}`;
+                            } else {
+                                alert('이메일을 입력해주세요.');
+                            }
+                        });
+
+                    });                    
+                </script>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+</html>

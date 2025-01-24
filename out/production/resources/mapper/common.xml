@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.metamate.metamate_service.mapper.UserMapper">
+
+
+
+    <select id="findByUsername" parameterType="String" resultType="com.metamate.metamate_service.dto.User" >
+        SELECT * FROM user WHERE user_id = #{username}
+    </select>
+
+<!--    <select id="findByUserId" parameterType="String" resultType="com.metamate.metamate_service.dto.User" >-->
+<!--        SELECT * FROM user WHERE user_id = #{user_id}-->
+<!--    </select>-->
+
+    <insert id="insertUser" >
+        INSERT INTO user (user_id,name, password, role,login_type,verification_code) VALUES (#{user_id},#{name}, #{password}, 'ROLE_USER',#{login_type},#{verification_code});
+    </insert>
+
+    <insert id="registerEmailUser" >
+        INSERT INTO user (user_id,name, password, role,login_type,verified) VALUES (#{user_id},#{name}, #{password}, 'ROLE_USER',#{login_type},#{verified});
+    </insert>
+
+    <select id="findByVerificationCode" parameterType="String" resultType="com.metamate.metamate_service.dto.User" >
+        SELECT * FROM user WHERE verification_code = #{code}
+    </select>
+
+    <update id="verifyUser">
+        UPDATE user SET verified = 1, verification_code=null WHERE user_id = #{user_id};
+    </update>
+
+    <update id="updateUserVerify">
+        UPDATE user SET verified = 0, verification_code=#{code} WHERE user_id = #{user_id};
+    </update>
+
+    <update id="updatePassword">
+        UPDATE user SET password = #{password} WHERE user_id = #{user_id};
+    </update>
+
+    <update id="updateUserName">
+        UPDATE user SET name = #{name} WHERE user_id = #{user_id};
+    </update>
+
+    <delete id="deleteUser" >
+        DELETE FROM user WHERE user_id = #{user_id}
+    </delete>
+
+</mapper>

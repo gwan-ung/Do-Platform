@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.metamate.metamate_service.mapper.QuizMapper">
+    <select id="getMyProject" parameterType="String" resultType="com.metamate.metamate_service.dto.Project" >
+        SELECT * FROM project
+        WHERE 1=1
+          AND user_id = #{user_id}
+          AND is_deleted = 0
+    </select>
+    <select id="getQuizItemCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM quiz_item
+        WHERE project_id = #{project_id}
+    </select>
+    <select id="getQuizItemList" parameterType="map" resultType="com.metamate.metamate_service.dto.Quiz_Item">
+        SELECT * FROM quiz_item
+        WHERE project_id = #{project_id}
+        ORDER BY created_at DESC
+            LIMIT 10 OFFSET #{offset}
+    </select>
+    <select id="getAllQuizItemList" parameterType="map" resultType="com.metamate.metamate_service.dto.Quiz_Item">
+        SELECT * FROM quiz_item
+        WHERE project_id = #{project_id}
+        ORDER BY created_at DESC
+    </select>
+
+    <insert id="insertQuizItem">
+        INSERT INTO quiz_item
+        (
+            project_id,
+            is_ai_created,
+            question,
+            answer,
+            explanation,
+            option1,
+            option2,
+            option3,
+            option4,
+            image_url
+        )
+        VALUES
+        (
+            #{quizItem.project_id},
+            #{quizItem.is_ai_created},
+            #{quizItem.question},
+            #{quizItem.answer},
+            #{quizItem.explanation},
+            #{quizItem.option1},
+            #{quizItem.option2},
+            #{quizItem.option3},
+            #{quizItem.option4},
+            #{quizItem.image_url}
+        )
+    </insert>
+
+    <insert id="insertAiQuizItems" parameterType="map">
+        INSERT INTO quiz_item
+        (
+            project_id,
+            is_ai_created,
+            question,
+            answer,
+            explanation,
+            option1,
+            option2,
+            option3,
+            option4,
+            image_url
+        )
+        VALUES
+        <foreach collection="quizItems" item="item" separator=",">
+            (
+            #{project_id},
+            1,
+            #{item.question},
+            #{item.answer},
+            #{item.explanations},
+            #{item.options[0]},
+            #{item.options[1]},
+            #{item.options[2]},
+            #{item.options[3]},
+            null
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="updateQuizItem">
+        UPDATE quiz_item
+        SET
+            question = #{quizItem.question},
+            answer = #{quizItem.answer},
+            explanation = #{quizItem.explanation},
+            option1 = #{quizItem.option1},
+            option2 = #{quizItem.option2},
+            option3 = #{quizItem.option3},
+            option4 = #{quizItem.option4}
+            <if test="quizItem.image_url != null and quizItem.image_url != ''">
+            , image_url = #{quizItem.image_url}
+            </if>
+        WHERE 1=1
+        AND id = #{quizItem.id}
+    </update>
+
+    <delete id="deleteQuizItem">
+        DELETE FROM quiz_item WHERE id=#{quiz_id}
+    </delete>
+
+    <select id="getMyAiQuizMeta" parameterType="int" resultType="com.metamate.metamate_service.dto.Ai_Quiz_Meta">
+        SELECT * FROM ai_quiz_meta
+        WHERE project_id = #{project_id}
+    </select>
+
+    <insert id="insertAiQuizMeta">
+        INSERT INTO ai_quiz_meta
+        (
+            project_id,
+            num_questions,
+            num_options,
+            difficulty_level,
+            grade_level,
+            topic,
+            objective,
+            content,
+            keyword
+        )
+        VALUES
+        (
+            #{ai_quiz_meta.project_id},
+            #{ai_quiz_meta.num_questions},
+            #{ai_quiz_meta.num_options},
+            #{ai_quiz_meta.difficulty_level},
+            #{ai_quiz_meta.grade_level},
+            #{ai_quiz_meta.topic},
+            #{ai_quiz_meta.objective},
+            #{ai_quiz_meta.content},
+            #{ai_quiz_meta.keyword}
+        )
+    </insert>
+
+    <update id="updateAiQuizMeta">
+        UPDATE ai_quiz_meta
+        SET
+            num_questions = #{ai_quiz_meta.num_questions} ,
+            num_options = #{ai_quiz_meta.num_options},
+            difficulty_level = #{ai_quiz_meta.difficulty_level},
+            grade_level = #{ai_quiz_meta.grade_level},
+            topic = #{ai_quiz_meta.topic},
+            objective = #{ai_quiz_meta.objective},
+            content = #{ai_quiz_meta.content},
+            keyword = #{ai_quiz_meta.keyword}
+        WHERE 1=1
+        AND id = #{ai_quiz_meta.id}
+    </update>
+
+</mapper>

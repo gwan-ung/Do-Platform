@@ -1,0 +1,153 @@
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do 플랫폼</title>
+    <meta name="keyword" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">   
+    
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/swiper/css/swiper.css">
+
+    <!-- script -->
+    <script src="./assets/scripts/jquery-3.1.1.min.js"></script>
+    <script src="./assets/scripts/script.js"></script>
+    <script src="./assets/scripts/login.js"></script>
+    <script src="./assets/swiper/js/swiper.js"></script>
+    
+</head>
+<body>
+    <header>
+        <div class="wrap">
+            <div class="header_left">
+                <div class="logo">
+                    <a href="/">
+                        <img src="./assets/images/logo.svg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="header_right">
+                <div class="login_after">
+                    <p>이미 회원이신가요?</p>
+                    <a href="/">로그인</a>
+                </div>
+                <!-- <div class="login_after">
+                    <p>회원이 아니신가요?</p>
+                    <a href="./sign_up.html">회원가입</a>
+                </div> -->
+                <!-- <div class="login_before">
+                    <div class="create">
+                        <a href="#none" class="modal_step_open" modal_step="Create">만들기</a>
+                    </div>
+                    <div class="user dropdown">
+                        <p>이현지</p>
+                        <i style="background: url('./assets/images/i_user.svg') no-repeat center; background-size: cover;">
+                        </i>
+                    </div>
+                    <div class="drop_con">
+                        <div class="drop_top">
+                            <div class="txt">
+                                <h5>이현지</h5>
+                                <p>leehjs2@gmail.com</p>
+                            </div>
+                            <div class="logout">
+                                <a href="./login.html">
+                                    로그아웃
+                                </a>
+                            </div>
+                        </div>
+                        <div class="drop_bottom">
+                            <ul class="list">
+                                <li>
+                                    <a href="./setting.html">
+                                        <i><img src="./assets/images/i_setting.svg" alt=""></i>
+                                        <p>계정설정</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="wrap">
+            <div class="login type2">
+                <div class="prev_btn">
+                    <a href="/sign-up">
+                        <img src="./assets/images/i_prev.svg" alt="">
+                    </a>
+                </div>
+                <div class="head_tit">
+                    <div class="tit">
+                        <h2>이메일 확인받기</h2>
+                        <span th:text="${email}"></span>
+<!--                        <p>[[${email}]]</p>-->
+                    </div>
+                </div>
+                <div class="txt">
+                    <p>
+                        임시 확인 코드를 보내드렸습니다.<br/>
+                        입력하여 이메일을 확인 받으세요. 한 번만 하시면 됩니다.                        
+                    </p>
+                </div>
+
+                <div class="form">
+                    <form action="/verify">
+                        <div class="input_wrap">
+                            <h5>확인 코드</h5>
+                            <input type="text" name ="code" placeholder="이메일에서 코드 붙여넣기" required>
+                          </div>   
+                        <div class="btn">
+                            <button type="submit" class="btn_primary btn_yellow">확인 받기</button>
+                        </div>
+                        <h2 th:if="${message}" th:text="${message}" style="color: red;"></h2>
+                    </form>
+                </div>
+
+                <div class="term" style="margin-top: 135px;">
+                    이메일을 받지 못하셨습니까? 
+                    <a th:data-email="${email}" href="javascript:void(0);" onclick="RetrySendCode(this)">코드 다시 보내기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <!-- modal -->
+    <!-- class="modal_step_open" modal_step="Alert" -->
+    
+    <div class="modal modal modal_step modal_stepAlert hidden">
+        <div class="modal_overlay">
+        </div>
+        <div class="modal_content modal_sm scrollbar">
+            <div class="layoutCont">  
+                <div class="modalContWrap">
+                    <!-- <div class="modal_close cancerButton">
+                      <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                    </div>                       -->
+                    <div class="modal_head">
+                    </div>
+                    <div class="modal_con scrollbar">
+                        <div class="txt ">
+                            <p>
+                                코드를 다시 보냈습니다. 이메일을 확인해 주세요.                        
+                            </p>
+                        </div>
+                        <div class="btn flex">
+                            <button type="button" class="btn_yellow cancerButton">확인</button>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.metamate.metamate_service.mapper.MainMapper">
+
+
+    <select id="getMyProjectList" parameterType="String" resultType="com.metamate.metamate_service.dto.Project" >
+        SELECT
+            id,
+            user_id,
+            name,
+            description,
+            server_url,
+            is_quiz_included,
+            is_favorite,
+            max_participants,
+            theme,
+            content,
+            is_deleted,
+            created_at,
+            updated_at
+        FROM project
+        WHERE 1=1
+        AND user_id = #{user_id}
+        AND is_deleted = 0 ORDER BY name DESC
+    </select>
+
+    <select id="getMyTrashProjectList" parameterType="String" resultType="com.metamate.metamate_service.dto.Project" >
+        SELECT
+            id,
+            user_id,
+            name,
+            description,
+            server_url,
+            is_quiz_included,
+            is_favorite,
+            max_participants,
+            theme,
+            content,
+            is_deleted,
+            created_at,
+            updated_at
+        FROM project
+        WHERE 1=1
+          AND user_id = #{user_id}
+          AND is_deleted = 1 ORDER BY name DESC
+    </select>
+
+    <select id="getMyDeletedProjectList" parameterType="String" resultType="com.metamate.metamate_service.dto.Project" >
+        SELECT
+            id,
+            user_id,
+            name,
+            description,
+            server_url,
+            is_quiz_included,
+            is_favorite,
+            max_participants,
+            theme,
+            content,
+            created_at,
+            deleted_at
+        FROM project
+        WHERE 1=1
+        AND user_id = #{user_id}
+        AND is_deleted = 1
+    </select>
+
+    <select id="getMyFavoriteProjectList" parameterType="String" resultType="com.metamate.metamate_service.dto.Project" >
+        SELECT
+            id,
+            user_id,
+            name,
+            description,
+            server_url,
+            is_quiz_included,
+            is_favorite,
+            max_participants,
+            theme,
+            content,
+            is_deleted,
+            created_at,
+            updated_at
+        FROM project
+        WHERE 1=1
+          AND user_id = #{user_id}
+          AND is_favorite = 1
+          AND is_deleted = 0 ORDER BY name DESC
+    </select>
+
+    <select id="getMyFolderList" parameterType="String" resultType="com.metamate.metamate_service.dto.Folder" >
+        SELECT
+            id,
+            user_id,
+            name
+        FROM folder
+        WHERE 1=1
+          AND user_id = #{user_id} ORDER BY name DESC
+    </select>
+
+    <select id="getMyFolderProjectList" parameterType="Integer" resultType="com.metamate.metamate_service.dto.Project" >
+        SELECT
+            p.id,
+            p.user_id,
+            p.name,
+            p.description,
+            p.server_url,
+            p.is_quiz_included,
+            p.is_favorite,
+            p.max_participants,
+            p.theme,
+            p.content,
+            p.is_deleted,
+            p.created_at,
+            p.updated_at
+        FROM
+            folder_project fp
+            JOIN
+            project p
+            ON
+            fp.project_id = p.id
+        WHERE 1=1
+          AND fp.folder_id = #{folder_id}
+          AND p.is_deleted = 0
+        ORDER BY p.name DESC
+    </select>
+
+    <select id="getAllFolderProjectList" parameterType="String" resultType="com.metamate.metamate_service.dto.Folder_Project" >
+        SELECT
+            fp.id,
+            fp.folder_id,
+            fp.project_id
+        FROM
+            folder_project fp
+                JOIN
+            folder f
+            ON
+                fp.folder_id = f.id
+        WHERE
+            f.user_id = #{user_id}
+    </select>
+
+    <insert id="createMyFolder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO folder
+        (
+            user_id,
+            name
+        )
+        VALUES
+        (
+            #{folder.user_id},
+            #{folder.name}
+        )
+    </insert>
+
+    <delete id="deleteMyFolder">
+        DELETE FROM folder WHERE id = #{folder_id}
+    </delete>
+
+    <update id="changeFolderName">
+        UPDATE folder SET name = #{folder_name}
+        WHERE 1=1
+          AND id = #{folder_id}
+    </update>
+
+    <update id="changeProjectName">
+        UPDATE project SET name = #{project_name}
+        WHERE 1=1
+          AND id = #{project_id}
+    </update>
+
+    <insert id="createMyFolderProject" >
+        INSERT INTO folder_project
+        (
+            folder_id,
+            project_id
+        )
+        VALUES
+        (
+            #{folder_id},
+            #{project_id}
+        )
+    </insert>
+
+    <delete id="deleteMyFolderProject">
+        DELETE FROM folder_project WHERE project_id = #{project_id} AND folder_id = #{folder_id}
+    </delete>
+
+
+    <update id="changeMaxParticipants">
+        UPDATE project SET max_participants = #{max_participants}
+        WHERE 1=1
+        AND id = #{project_id}
+    </update>
+
+    <update id="changeProjectFavorite">
+        UPDATE project SET is_favorite = #{is_favorite}
+        WHERE 1=1
+          AND id = #{project_id}
+    </update>
+
+    <update id="changeDeletedStatus">
+        UPDATE project SET is_deleted = #{is_deleted}
+        WHERE 1=1
+          AND id = #{project_id}
+    </update>
+
+    <delete id="projectPermanentDelete">
+        DELETE FROM project WHERE id = #{project_id}
+    </delete>
+
+    <insert id="createProject" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO project
+        (
+            user_id,
+            name,
+            theme,
+            content,
+            max_participants
+        )
+        VALUES
+        (
+            #{project.user_id},
+            #{project.name},
+            #{project.theme},
+            #{project.content},
+            #{project.max_participants}
+        )
+    </insert>
+
+    <select id="getThemeList" parameterType="String" resultType="com.metamate.metamate_service.dto.Theme" >
+        SELECT
+            id,
+            name,
+           subject,
+           image_url,
+           description
+        FROM theme
+        WHERE 1=1 ORDER BY name DESC
+    </select>
+
+    <select id="getContentList" parameterType="String" resultType="com.metamate.metamate_service.dto.Content" >
+        SELECT
+            id,
+            name,
+            type,
+            image_url,
+            description
+        FROM content
+        WHERE 1=1 ORDER BY name DESC
+    </select>
+    <select id="getProject" resultType="com.metamate.metamate_service.dto.Project" >
+        SELECT
+            *
+        FROM project
+        WHERE id = #{project_id}
+    </select>
+</mapper>

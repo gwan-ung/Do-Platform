@@ -1,0 +1,223 @@
+<div class="wrap">
+    <div class="con_wrap">
+        <div class="con">
+            <div class="head_tit">
+                <div class="tit">
+                    <h2>AI 퀴즈 제작
+                        <i><img src="../assets/images/i_info.svg" alt="">
+                        </i>
+                    </h2>
+                    <small>퀴즈 문제 생성을 위한 필수 항목을 입력해주세요.</small>
+                </div>
+            </div>
+            <ul class="input_list">
+                <li class="quiz_con1">
+                    <div class="input_wrap">
+                        <h5>수업제목<small>*</small></h5>
+                        <div class="input_func">
+                            <input type="text" id="input-topic" placeholder="제목을 입력해 주세요."
+                            th:value="${ai_quiz_meta != null ? ai_quiz_meta.topic : ''}">
+                        </div>
+                    </div>
+                </li>
+                <li class="quiz_con2">
+                    <div class="input_wrap">
+                        <h5>주제 또는 수업 목표<small>*</small></h5>
+                        <div class="input_func">
+                            <input type="text" id="input-objective" placeholder="주제 또는 수업 목표를 입력해 주세요."
+                                   th:value="${ai_quiz_meta != null ? ai_quiz_meta.objective : ''}" >
+                        </div>
+                    </div>
+                </li>
+                <li class="quiz_con3">
+                    <div class="input_wrap">
+                        <h5>수업내용 요약<small>*</small></h5>
+                        <div class="input_func">
+                            <textarea name="" id="input-content" placeholder="수업 내용을 요약하여 입력해주세요."
+                                      th:text="${ai_quiz_meta != null ? ai_quiz_meta.content : ''}"></textarea>
+                        </div>
+                    </div>
+                </li>
+                <li class="quiz_con4">
+                    <div class="input_wrap">
+                        <h5>난이도 수준<small>*</small></h5>
+                        <div class="input_func flex">
+                            <select name="grade_level" id="select-grade-level" >
+                                <option value="">
+                                    선택
+                                </option>
+                                <option value="초1" th:selected="${ai_quiz_meta != null and ai_quiz_meta.grade_level == '초1'}">
+                                    초1
+                                </option>
+                                <option value="초2" th:selected="${ai_quiz_meta != null and ai_quiz_meta.grade_level == '초2'}">
+                                    초2
+                                </option>
+                                <option value="초3" th:selected="${ai_quiz_meta != null and ai_quiz_meta.grade_level == '초3'}">
+                                    초3
+                                </option>
+                            </select>
+                            <select name="difficulty_level" id="select-difficulty-level" >
+                                <option value="">
+                                    선택
+                                </option>
+                                <option value="초급" th:selected="${ai_quiz_meta != null and ai_quiz_meta.difficulty_level == '초급'}">
+                                    초급
+                                </option>
+                                <option value="중급" th:selected="${ai_quiz_meta != null and ai_quiz_meta.difficulty_level == '중급'}">
+                                    중급
+                                </option>
+                                <option value="고급" th:selected="${ai_quiz_meta != null and ai_quiz_meta.difficulty_level == '고급'}">
+                                    고급
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="quiz_con5">
+                    <div class="input_wrap">
+                        <h5>문제유형<small>*</small></h5>
+                        <div class="input_func">
+                            <select name="num_options" id="select-num-options">
+                                <option value="">
+                                    선택
+                                </option>
+                                <option value="2" th:selected="${ai_quiz_meta != null and ai_quiz_meta.num_options == 2}">
+                                    2지선다
+                                </option>
+                                <option value="3" th:selected="${ai_quiz_meta != null and ai_quiz_meta.num_options == 3}">
+                                    3지선다
+                                </option>
+                                <option value="4" th:selected="${ai_quiz_meta != null and ai_quiz_meta.num_options == 4}">
+                                    4지선다
+                                </option>
+<!--                                <option value="5" th:selected="${ai_quiz_meta != null and ai_quiz_meta.num_options == 5}">-->
+<!--                                    5지선다-->
+<!--                                </option>-->
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="quiz_con6">
+                    <div class="input_wrap">
+                        <h5>핵심 키워드<small>*</small></h5>
+                        <div class="input_func">
+                            <input type="text" id="input-keyword" placeholder="ex. 미생물, 생물"
+                            th:value="${ai_quiz_meta != null ? ai_quiz_meta.keyword : ''}">
+                        </div>
+                    </div>
+                </li>
+<!--                <li class="quiz_con7">-->
+<!--                    <div class="input_wrap">-->
+<!--                        <h5>문제 수<small>*</small></h5>-->
+<!--                        <div class="input_func">-->
+<!--                            <input type="text" placeholder="숫자를 입력해 주세요." >-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
+            </ul>
+            <div class="btn flex btn_center w300">
+                <a href="javascript:void(0);"
+                   class="btn_line"
+                   th:data-project-id="${project_id}"
+                   onclick="CallQuiz(this)">
+                    뒤로가기
+                </a>
+                <button type="submit"
+                        class="btn_yellow disabled_btn2"
+                        th:data-is-new="${ai_quiz_meta == null? true : false}"
+                        th:data-id="${ai_quiz_meta != null ? ai_quiz_meta.id : 0}"
+                        th:data-project-id="${project_id}"
+                        onclick="createAiMeta(this)"
+                        disabled>
+                    생성하기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- modal -->
+<div class="modal modal modal_step modal_stepAlert hidden">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div>                       -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt tal">
+                        <p>
+                            퀴즈 만들기 작업을 중단하시겠습니까?<br/>
+                            작업 내용이 저장되지 않을 수 있습니다.
+                        </p>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button" class="btn_yellow cancerButton">예</button>
+                        <button type="button" class="btn_line cancerButton">아니오</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepCreate hidden" id="createAiQuizModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div> -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt">
+                        <p>
+                            저장하신 내용으로<br/>
+                            퀴즈를 생성하시겠습니까?
+                        </p>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button"
+                                class="btn_yellow cancerButton"
+                                th:data-project-id="${project_id}"
+                                onclick="CreateAiQuizForServer(this)" >예</button>
+                        <button type="button" class="btn_line cancerButton">아니오</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal modal_step modal_stepIng hidden" id="creatingAiQuizModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar" style="width: 342px;">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div> -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar" style="padding: 64px 48px;">
+                    <div class="txt">
+                        <p>
+                            퀴즈를 생성하고 있습니다.
+                        </p>
+                    </div>
+                    <div class="progress">
+                        <progress value="20" max="100"></progress>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

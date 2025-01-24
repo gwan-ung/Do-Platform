@@ -1,0 +1,140 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do 플랫폼</title>
+    <meta name="keyword" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">   
+    
+    <!-- css -->
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/swiper/css/swiper.css">
+
+    <!-- script -->
+    <script src="./assets/scripts/jquery-3.1.1.min.js"></script>
+    <script src="./assets/scripts/script.js"></script>
+    <script src="./assets/swiper/js/swiper.js"></script>
+    
+</head>
+<body>
+    <header>
+        <div class="wrap">
+            <div class="header_left">
+                <div class="logo">
+                    <a href="/">
+                        <img src="./assets/images/logo.svg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="header_right">
+                <div class="login_after">
+                    <p>이미 회원이신가요?</p>
+                    <a href="/init-login">로그인</a>
+                </div>
+                <!-- <div class="login_after">
+                    <p>회원이 아니신가요?</p>
+                    <a href="./sign_up.html">회원가입</a>
+                </div> -->
+                <!-- <div class="login_before">
+                    <div class="create">
+                        <a href="#none" class="modal_step_open" modal_step="Create">만들기</a>
+                    </div>
+                    <div class="user dropdown">
+                        <p>이현지</p>
+                        <i style="background: url('./assets/images/i_user.svg') no-repeat center; background-size: cover;">
+                        </i>
+                    </div>
+                    <div class="drop_con">
+                        <div class="drop_top">
+                            <div class="txt">
+                                <h5>이현지</h5>
+                                <p>leehjs2@gmail.com</p>
+                            </div>
+                            <div class="logout">
+                                <a href="./login.html">
+                                    로그아웃
+                                </a>
+                            </div>
+                        </div>
+                        <div class="drop_bottom">
+                            <ul class="list">
+                                <li>
+                                    <a href="./setting.html">
+                                        <i><img src="./assets/images/i_setting.svg" alt=""></i>
+                                        <p>계정설정</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="wrap">
+            <div class="login type2">
+                <div class="prev_btn">
+                    <a href="/sign-up">
+                        <img src="./assets/images/i_prev.svg" alt="">
+                    </a>
+                </div>
+                <div class="head_tit">
+                    <div class="tit">
+                        <h2>이메일로 가입</h2>
+                        <span th:text="${email}"></span>
+                    </div>
+                </div>
+                <div class="form">
+                    <form action="/register-user-email">
+                        <div class="input_wrap yellow">
+                            <h5>비밀번호 입력</h5>
+                            <div class="input_func">
+                              <input type="hidden" name="email" th:value="${email}" />
+                              <input type="password" class="password_input" name="password" minlength="8" maxlength="16" placeholder="신중하게 정하세요" required>
+                              <div class="input_btn input_visible" style="padding-bottom: 22px;">
+                                <button type="button"><img src="./assets/images/input_invisible.svg" alt=""></button>
+                              </div>
+                              <small>최소 8자</small>
+                            </div>  
+                          </div>
+                        <div class="btn">
+<!--                            onclick="location.href='/login'"-->
+                            <button type="submit" class="btn_primary btn_yellow" >계정 만들기</button>
+                        </div>
+                        <div class="create">
+                            <span class="dots" style="color: transparent;"></span>계정 생성중<span class="dots"></span>
+                            <h2 th:if="${message}" th:text="${message}"></h2>
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                let dotCount = 0; // 점의 개수를 저장하는 변수
+                                const maxDots = 3; // 최대 점 개수
+                                const interval = 500; // 점이 추가되는 간격 (밀리초)
+
+                                setInterval(function () {
+                                    dotCount = (dotCount + 1) % (maxDots + 1); // 점의 개수를 순환
+                                    $('.dots').text('.'.repeat(dotCount)); // 점 개수만큼 문자열로 표시
+                                }, interval);
+                            });                            
+                        </script>                        
+                    </form>
+                </div>
+                <div class="term">
+                    가입하면 
+                    <a href="./pdf.pdf" target="_blank">Teams of Service </a>
+                    및 
+                    <a href="./pdf.pdf" target="_blank">개인정보 처리방침</a>에 동의하게 됩니다.
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<div class="wrap">
+    <div class="con_wrap">
+        <div class="con">
+            <div class="head_tit">
+                <div class="tit">
+                    <h2>AI 퀴즈 제작
+                        <i><img src="../assets/images/i_info.svg" alt="">
+                        </i>
+                    </h2>
+                    <small><span style="text-decoration: underline;">입력하신 내용을 토대로 퀴즈가 생성되었습니다.</span></small>
+                </div>
+            </div>
+            <div class="que_select">
+                <div class="select_txt">
+                </div>
+                <ul class="que_list scrollbar">
+                    <!-- 퀴즈 리스트 반복 -->
+                    <li th:each="question, iterStat : ${aiQuizQuestionList}" class="on">
+                        <div class="que_head">
+                            <div class="head_left">
+                                <input class="quiz-checkbox" type="checkbox" th:id="'que' + ${iterStat.index + 1}" />
+                                <label class="check_style1" th:for="'que' + ${iterStat.index + 1}" th:text="${iterStat.index + 1} + '. ' + ${question.question}"></label>
+                            </div>
+                            <div class="head_right">
+                                <button type="button">
+                                    <img src="../assets/images/que_arrow.svg" alt="">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="que_con" style="display: none;">
+                            <ul class="select_list">
+                                <li th:each="option : ${question.options}">
+                                    <p th:text="${option}"></p>
+                                </li>
+                            </ul>
+                            <div class="correct_box">
+                                <div class="correct">
+                                    <h5>
+                                        <i><img src="../assets/images/i_correct.svg" alt=""></i>
+                                        정답
+                                    </h5>
+                                    <p th:text="${question.answer}"></p>
+                                </div>
+                                <ul class="info_txt">
+                                    <li th:each="key, value : ${question.explanations}">
+                                        <strong th:text="${key}"></strong>
+<!--                                        <span th:text="${value}"></span>-->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="btn flex btn_center w300">
+                <a href="javascript:void(0);"
+                   class="btn_line"
+                   th:data-project-id="${project_id}"
+                   th:data-ai-meta-id="${ai_meta_id}"
+                   onclick="RetryAiQuizCreateModal()"
+                >
+                    다시 추천
+                </a>
+                <button type="button"
+                        class="btn_yellow"
+                        id="apply-quiz-btn"
+                        th:data-project-id="${project_id}"
+                        onclick="ApplyAiQuiz(this)"
+                        disabled>퀴즈 적용</button>
+<!--                <a href="./create_quiz.html" class="btn_yellow" id="apply-quiz-btn" disabled>-->
+<!--                    퀴즈 적용-->
+<!--                </a>-->
+            </div>
+
+            <!-- 경고 상태창 -->
+            <div class="del_confirm alert1">
+                <i><img src="../assets/images/i_confirm.svg" alt=""></i>
+                <p>AI퀴즈에서 추출된 문제가 리스트에 추가되었습니다. (<span>2</span>/10)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepCreate hidden" id="createAiQuizModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <!-- <div class="modal_close cancerButton">
+                  <img src="./assets/images/modal_close.svg" alt="모달 닫기버튼">
+                </div> -->
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar">
+                    <div class="txt">
+                        <p>
+                            원하시는 문제가 없나요?<br/>
+                            퀴즈를 다시 생성 하시겠습니까?
+                        </p>
+                    </div>
+                    <div class="btn flex">
+                        <button type="button"
+                                class="btn_yellow cancerButton"
+                                th:data-project-id="${project_id}"
+                                onclick="RetryAiQuizCreate(this)" >예</button>
+                        <button type="button" class="btn_line cancerButton">아니오</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal modal_step modal_stepIng hidden" id="creatingAiQuizModal">
+    <div class="modal_overlay">
+    </div>
+    <div class="modal_content modal_sm scrollbar" style="width: 342px;">
+        <div class="layoutCont">
+            <div class="modalContWrap">
+                <div class="modal_head">
+                </div>
+                <div class="modal_con scrollbar" style="padding: 64px 48px;">
+                    <div class="txt">
+                        <p>
+                            퀴즈를 생성하고 있습니다.
+                        </p>
+                    </div>
+                    <div class="progress">
+                        <progress value="20" max="100"></progress>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

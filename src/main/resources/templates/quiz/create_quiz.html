@@ -1,0 +1,87 @@
+
+<div class="table">
+        <table style="width: 100%;border-collapse: collapse;table-layout: fixed;">
+            <colgroup>
+                <col style="width: 150px;">
+                <col style="width: 40px;">
+                <col style="width: 150px;">
+                <col style="width: 30px;">
+                <col style="width: 30px;">
+                <col style="width: 30px;">
+                <col style="width: 30px;">
+                <col style="width: 60px;">
+                <col style="width: 50px;">
+                <col style="width: 50px;">
+            </colgroup>
+            <tr>
+                <th>문제</th>
+                <th>정답</th>
+                <th>해설</th>
+                <th>보기 1</th>
+                <th>보기 2</th>
+                <th>보기 3</th>
+                <th>보기 4</th>
+                <th>이미지</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+            <tr th:each="quiz, i:${quizList}">
+                <td class="tal" style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">[[${quiz.question}]]</td>
+                <td style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">[[${quiz.answer}]]</td>
+                <td class="tal" style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">[[${quiz.explanation}]]</td>
+                <td style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">[[${quiz.option1}]]</td>
+                <td style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">[[${quiz.option2}]]</td>
+                <td style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">[[${quiz.option3}]]</td>
+                <td style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;">[[${quiz.option4}]]</td>
+                <td clases="tal">
+                    <p th:text="${quiz.image_url}" style="max-width: 100%;white-space: nowrap;overflow: hidden; text-overflow: ellipsis;"></p>
+                </td>
+                <td>
+                    <div class="table_btn">
+                        <button type="button"
+                                onclick="OpenQuizEditModal(this)"
+                                th:data-project-id="${quiz.project_id}"
+                                th:data-id="${quiz.id}"
+                                th:data-question="${quiz.question}"
+                                th:data-answer="${quiz.answer}"
+                                th:data-explanation="${quiz.explanation}"
+                                th:data-option1="${quiz.option1}"
+                                th:data-option2="${quiz.option2}"
+                                th:data-option3="${quiz.option3}"
+                                th:data-option4="${quiz.option4}"
+                                th:data-image-url="${quiz.image_url}"
+                        >수정</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="table_btn">
+                        <button type="button"
+                                onclick="OpenQuizDeleteModal(this)"
+                                th:data-project-id="${quiz.project_id}"
+                                th:data-quiz-id="${quiz.id}"
+                                th:data-quiz-file-name="${quiz.image_url}"
+                                th:data-quiz-count="${quizList.size()}"
+                        >삭제</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+<ul class="pagi_list" id="ul-page-list"
+    th:data-current-page="${currentPage}"
+    th:data-total-pages="${totalPage}"
+    th:data-project-id="${project_id}"
+>
+</ul>
+
+
+
+
+
+
+
+
+
+
+

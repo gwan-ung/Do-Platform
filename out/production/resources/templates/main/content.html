@@ -1,0 +1,50 @@
+<div class="wrap">
+    <div class="con_wrap">
+        <div class="con">
+            <div class="head_tit">
+                <div class="tit">
+                    <h2>콘테츠 설정</h2>
+                </div>
+                <ul class="sort_list">
+                    <li>
+                        <input type="radio" name="sort" id="sort1" checked>
+                        <label for="sort1">내림차순</label>
+                    </li>
+                    <li>
+                        /
+                    </li>
+                    <li>
+                        <input type="radio" name="sort" id="sort2">
+                        <label for="sort2">오름차순</label>
+                    </li>
+                </ul>
+            </div>
+            <div class="list_wrap">
+                <ul class="prod_list" id="contentList">
+                    <!-- 카테고리 체크시 .on 추가 -->
+                    <li th:each="content : ${contentList}"
+                        th:data-content-id="${content.id}"
+                        th:data-content-name="${content.name}">
+                        <a href="#none">
+                            <div class="img" th:style="'background: url('+${content.image_url}+') #fff no-repeat center; background-size: cover;'"></div>
+                        </a>
+                        <div class="txt">
+                            <div class="txt_top">
+                                <a href="#none">
+                                    <h5>[[${content.name}]]</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn flex btn_center w300">
+                <a href="javascript:void(0);" class="btn_line" onclick="GoTheme()">뒤로가기</a>
+                <button type="button" class="btn_yellow disabled_btn modal_step_open" modal_step="Person" disabled>다음 단계</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

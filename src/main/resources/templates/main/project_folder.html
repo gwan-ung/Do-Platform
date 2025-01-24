@@ -1,0 +1,175 @@
+<div class="head_tit">
+    <div class="tit">
+        <h2>[[${folderName}]]</h2>
+    </div>
+    <ul class="sort_list">
+        <li>
+            <input type="radio" name="sort" id="sort1" checked>
+            <label for="sort1">내림차순</label>
+        </li>
+        <li>
+            /
+        </li>
+        <li>
+            <input type="radio" name="sort" id="sort2">
+            <label for="sort2">오름차순</label>
+        </li>
+    </ul>
+</div>
+
+<div class="list_wrap">
+    <ul class="prod_list" id="projectList">
+        <!-- 타임리프를 이용한 프로젝트 리스트 반복 -->
+        <li th:each="project : ${projectList}"
+            th:data-project-name="${project.name}"
+            th:data-project-id="${project.id}"
+            th:id="'li-project-'+${project.id}"
+        >
+
+            <div class="img" style="background: url('') #fff no-repeat center; background-size: cover;">
+            </div>
+            <div class="txt">
+                <div class="txt_top">
+                    <h5 th:text="${project.name}" th:id="'h-project-name-'+${project.id}">프로젝트명</h5>
+                    <button type="button" class="dropdown">
+                        <img src="../assets/images/dots.svg" alt="">
+                    </button>
+                    <ul class="drop_con">
+                        <li th:data-project-id="${project.id}"
+                            th:data-project-max_participants="${project.max_participants}">
+                            <a href="#none" onclick="OpenParticipantModal(this)">
+                                <i>
+                                    <img src="../assets/images/i_drop1.svg" alt="">
+                                </i>
+                                <p th:id="'p-max_participants-'+${project.id}">참여인원 수정([[${project.max_participants}]])</p>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a href="javascript:void(0);"
+                               th:data-project-id="${project.id}"
+                               th:data-project-name="${project.name}"
+                               onclick="OpenProjectNameModal(this)"
+                            >
+                                <i>
+                                    <img src="../assets/images/i_drop1.svg" alt="">
+                                </i>
+                                <p>이름수정</p>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a href="javascript:void(0);" onclick="StartUnity('${project.server_url}')">
+                                <i>
+                                    <img src="../assets/images/i_drop2.svg" alt="">
+                                </i>
+                                <p>게임 접속하기</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:data-project-id="${project.id}"
+                               href="javascript:void(0);"
+                               onclick="CallQuiz(this)">
+                                <i>
+                                    <img src="../assets/images/i_drop3.svg" alt="">
+                                </i>
+                                <p>퀴즈 수정</p>
+                            </a>
+                        </li>
+<!--                        <li>-->
+<!--                            <a href="#none" class="book_mark_open">-->
+<!--                                <i>-->
+<!--                                    <img src="../assets/images/i_drop4.svg" alt="">-->
+<!--                                </i>-->
+<!--                                <p>북마크</p>-->
+<!--                            </a>-->
+<!--                        </li>-->
+                        <li>
+                            <a href="javascript:void(0);"
+                               class="alert4_btn"
+                               data-project-unity-link="http://localhost:8080/main/unity"
+                               onclick="ProjectLinkCopyToClipboard(this)">
+                                <i>
+                                    <img src="../assets/images/i_drop5.svg" alt="">
+                                </i>
+                                <p>Do 링크 복사</p>
+                            </a>
+                        </li>
+                        <li class="del" >
+                            <a href="javascript:void(0);"
+                               class="alert3_btn"
+                               th:id="'del-project-'+${project.id}"
+                               th:data-project-id="${project.id}"
+                               th:data-project-deleted="${project.is_deleted}"
+                               onclick="UpdateIsDeleted(this)" >
+                                <i>
+                                    <img src="../assets/images/i_drop6.svg" alt="">
+                                </i>
+                                <p>휴지통으로 이동</p>
+                            </a>
+                        </li>
+                    </ul>
+<!--                    <ul class="book_mark">-->
+<!--                        <li>-->
+<!--                            <div class="book_close">-->
+<!--                                <button type="button">-->
+<!--                                    <img src="../assets/images/i_close.svg" alt="">-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <h4>북마크 편집</h4>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <input type="checkbox" name="">-->
+<!--                            <label>-->
+<!--                                <div class="txt"-->
+<!--                                     th:data-project-id="${project.id}"-->
+<!--                                     th:data-project-favorite="${project.is_favorite}"-->
+<!--                                     th:id="'div-favorite-'+${project.id}"-->
+<!--                                     th:classappend="${project.is_favorite == 1} ? 'favorite-active' : ''"-->
+<!--                                     onclick="UpdateFavorite(this)">-->
+
+<!--                                    <i>-->
+<!--                                        <img src="../assets/images/i_nav3.svg" alt="">-->
+<!--                                    </i>-->
+<!--                                    <p>즐겨찾기</p>-->
+<!--                                </div>-->
+<!--                            </label>-->
+<!--                        </li>-->
+<!--                        <th:block th:each="folder : ${folderList}">-->
+<!--                            <li th:if="${folder.id != folderId}" th:data-folder-id="${folder.id}">-->
+<!--                                <input type="checkbox"-->
+<!--                                       name="input-check"-->
+<!--                                       checked="true"-->
+<!--                                >-->
+<!--                                <label>-->
+<!--                                    <div class="txt favorite-active">-->
+<!--                                        <i>-->
+<!--                                            <img src="../assets/images/i_nav6.svg" alt="">-->
+<!--                                        </i>-->
+<!--                                        <p th:text="${folder.name}">수학게임</p>-->
+<!--                                    </div>-->
+<!--                                </label>-->
+<!--                            </li>-->
+<!--                        </th:block>-->
+<!--                    </ul>-->
+                </div>
+                <p th:text="${project.created_at}">30분</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<div class="del_confirm alert3">
+    <i><img src="../assets/images/i_alert.svg" alt=""></i>
+    <p>프로젝트를 휴지통으로 이동시켰습니다.</p>
+</div>
+<div class="del_confirm alert4">
+    <i><img src="../assets/images/i_alert.svg" alt=""></i>
+    <p>Do 링크 클립보드에 복사 하였습니다.</p>
+</div>
+
+
+
+
+

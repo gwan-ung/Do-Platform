@@ -1,5 +1,10 @@
 # Unity Build files to ignore
 src/main/resources/static/unity/Build/*.data
 src/main/resources/static/unity/Build/*.wasm
+src/main/resources/firebase/serviceAccountKey.json
+src/main/resources/application.yml
+
 out/production/resources/static/unity/Build/*.data
 out/production/resources/static/unity/Build/*.wasm
+out/production/resources/application.yml
+out/production/resources/firebase/serviceAccountKey.json
